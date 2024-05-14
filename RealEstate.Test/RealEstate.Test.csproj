@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <OutputType>Library</OutputType>
+	  <TargetFramework>net7.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <UserSecretsId>ee8bc57c-3e17-4807-abc5-aaedc5700459</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Routing\**" />
+    <EmbeddedResource Remove="Routing\**" />
+    <None Remove="Routing\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.7.2" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.2.0.71021">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FunctionalTests\ClientsMicroserviceTests\" />
+    <Folder Include="FunctionalTests\ContractsMicroserviceTests\" />
+    <Folder Include="FunctionalTests\EstatesMicroserviceTests\" />
+    <Folder Include="FunctionalTests\ListingsMicroserviceTests\" />
+    <Folder Include="FunctionalTests\ExternalAPIsMicroserviceTests\" />
+    <Folder Include="FunctionalTests\MessagingMicroserviceTests\" />
+    <Folder Include="FunctionalTests\UtilitiesMicroserviceTests\" />
+    <Folder Include="IntegrationTests\Databases\" />
+    <Folder Include="IntegrationTests\Repositories\UserRepositoryTests\" />
+    <Folder Include="UnitTests\UtilitiesMicroserviceTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservices\ClientsMicroservice\ClientsMicroservice.csproj" />
+	<ProjectReference Include="..\Microservices\ListingsMicroservice\ListingsMicroservice.csproj" />
+	<ProjectReference Include="..\Microservices\UtilitiesMicroservice\UtilitiesMicroservice.csproj" />
+    <ProjectReference Include="..\RealEstate.ApiGateway\RealEstate.ApiGateway.csproj" />
+    <ProjectReference Include="..\RealEstate.Shared\RealEstate.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

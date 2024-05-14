@@ -1,0 +1,160 @@
+version: '3.4'
+name: realestate-microservices
+
+services:
+# API Gateway
+  api-gateway:
+    image: ${DOCKER_REGISTRY-}api-gateway
+    build:
+      context: .
+      dockerfile: RealEstate.ApiGateway/Dockerfile
+
+
+# Microservices
+  api.estates:
+    image: ${DOCKER_REGISTRY-}api.estates
+    build:
+      context: .
+      dockerfile: Microservices/EstatesMicroservice/Dockerfile
+
+  api.listings:
+    image: ${DOCKER_REGISTRY-}api.listings
+    build:
+      context: .
+      dockerfile: Microservices/ListingsMicroservice/Dockerfile
+
+  api.clients:
+    image: ${DOCKER_REGISTRY-}api.clients
+    build:
+      context: .
+      dockerfile: Microservices/ClientsMicroservice/Dockerfile
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  api.contracts:
+    image: ${DOCKER_REGISTRY-}api.contracts
+    build:
+      context: .
+      dockerfile: Microservices/ContractsMicroservice/Dockerfile
+ 
+  api.external:
+    image: ${DOCKER_REGISTRY-}api.external
+    build:
+      context: .
+      dockerfile: Microservices/ExternalAPIsMicroservice/Dockerfile
+
+  api.messaging:
+    image: ${DOCKER_REGISTRY-}api.messaging
+    build:
+      context: .
+      dockerfile: Microservices/MessagingMicroservice/Dockerfile  
+
+  api.utilities:
+    image: ${DOCKER_REGISTRY-}api.utilities
+    build:
+      context: .
+      dockerfile: Microservices/UtilitiesMicroservice/Dockerfile
+
+# Utilities:
+  util.rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  util.pgadmin:
+    image: dpage/pgadmin4  
+
+  util.portainer:
+    image: portainer/portainer-ce
+
+  util.elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+
+  util.kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+
+
+# Databases + Keycloak
+  db.clients:
+    image: postgres
+
+  db.contracts:
+    image: postgres
+
+  db.estates:
+    image: postgres
+
+  db.listings:
+    image: postgres
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.1
+
+  db.messages:
+    image: redis:alpine
+
+
+# Volumes - persist data from containers
+volumes:
+  clients_data:
+  contracts_data:
+  estates_data:
+  listings_data:
+  mongo_data:
+  portainer_data:
+  pgadmin_data:
+  elasticsearch-data:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Micro-Databases 
+#  db.estates:
+#    image: postgres
+#  db.contracts:
+#    image: postgres
+#  db.clients:
+#    image: postgres
+#  db.listings:
+#    image: postgres
+#  db.identity:    
+#    image: postgres
+
+#  realestate.aggregator:
+#    image: ${DOCKER_REGISTRY-}realestateaggregator
+#    build:
+#      context: .
+#      dockerfile:  RealEstate.Aggregator/Dockerfile
+
+#  test.grpc:
+#    image: ${DOCKER_REGISTRY-}grpc
+#    build:
+#      context: .
+#      dockerfile: Grpc/Dockerfile
+
+# Web - todo fix
+#  appFrontendHere:
+#    image: ${DOCKER_REGISTRY-}appFrontendHere
+#    build:
+#      context: .
+#      dockerfile: RealEstate.WEB/appFrontendHere/Dockerfile
+
+#  webstatus:
+#    image: ${DOCKER_REGISTRY-}webstatus
+#    build:
+#      context: .
+#      dockerfile: RealEstate.WEB/WebStatus/Dockerfile
